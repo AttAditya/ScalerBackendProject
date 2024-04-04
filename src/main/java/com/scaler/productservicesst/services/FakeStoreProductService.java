@@ -1,6 +1,7 @@
 package com.scaler.productservicesst.services;
 
 import com.scaler.productservicesst.dtos.FakeStoreProductDTO;
+import com.scaler.productservicesst.exceptions.ProductNotFoundException;
 import com.scaler.productservicesst.models.Category;
 import com.scaler.productservicesst.models.Product;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,6 @@ import java.util.List;
 @Service
 public class FakeStoreProductService implements ProductService {
     private Product convertFakeStoreProductDTOToProduct(FakeStoreProductDTO fakeStoreProductDTO) {
-        // Convert FakeStore Product DTO to Product object
         Product product = new Product();
 
         product.setId(fakeStoreProductDTO.getId());
@@ -33,13 +33,11 @@ public class FakeStoreProductService implements ProductService {
 
     @Override
     public Product getProductById(Long id) {
-        // Call the FakeStore API to get the product with given id.
         RestTemplate restTemplate = new RestTemplate();
         FakeStoreProductDTO fakeStoreProductDTO = restTemplate.getForObject("https://fakestoreapi.com/products/" + id, FakeStoreProductDTO.class);
 
-        // Handle Exception for products that don't exist
         if (fakeStoreProductDTO == null) {
-            return null;
+            throw new ProductNotFoundException(id, "Product ID not found: " + id);
         }
 
         return convertFakeStoreProductDTOToProduct(fakeStoreProductDTO);
@@ -47,18 +45,15 @@ public class FakeStoreProductService implements ProductService {
 
     @Override
     public List<Product> getAllProducts() {
-        // Call the FakeStore API to get all products
         RestTemplate restTemplate = new RestTemplate();
         FakeStoreProductDTO[] fakeStoreProductDTOs = restTemplate.getForObject("https://fakestoreapi.com/products", FakeStoreProductDTO[].class);
 
         List<Product> products = new ArrayList<>();
 
-        // Handle Exception that products don't exist
         if (fakeStoreProductDTOs == null) {
             return products;
         }
 
-        // Convert All FakeStore Product DTOs to Product
         for (FakeStoreProductDTO fakeStoreProductDTO: fakeStoreProductDTOs) {
             products.add(convertFakeStoreProductDTOToProduct(fakeStoreProductDTO));
         }
