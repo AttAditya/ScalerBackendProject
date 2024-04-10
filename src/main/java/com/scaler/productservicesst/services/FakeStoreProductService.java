@@ -10,7 +10,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+@Service("FakeStoreProductService")
 public class FakeStoreProductService implements ProductService {
     private Product convertFakeStoreProductDTOToProduct(FakeStoreProductDTO fakeStoreProductDTO) {
         Product product = new Product();
@@ -41,6 +41,11 @@ public class FakeStoreProductService implements ProductService {
         }
 
         return convertFakeStoreProductDTOToProduct(fakeStoreProductDTO);
+    }
+
+    @Override
+    public Product createProduct(Product product) {
+        return null;
     }
 
     @Override
