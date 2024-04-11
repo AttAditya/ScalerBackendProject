@@ -25,6 +25,7 @@ public class SelfProductService implements ProductService {
     public List<Product> getAllProducts() {
         return null;
     }
+
     @Override
     public Product getProductById(Long id) {
         Optional<Product> optionalProduct = productRepository.findById(id);
