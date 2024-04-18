@@ -6,11 +6,13 @@ import com.scaler.productservicesst.models.Category;
 import com.scaler.productservicesst.models.Product;
 import com.scaler.productservicesst.repositories.CategoryRepository;
 import com.scaler.productservicesst.repositories.ProductRepository;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Primary
 @Service("SelfProductService")
 public class SelfProductService implements ProductService {
     private final ProductRepository productRepository;
