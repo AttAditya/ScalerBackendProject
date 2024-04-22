@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import javax.management.RuntimeErrorException;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
@@ -40,14 +38,6 @@ class ProductControllerTest {
 
         Product output = productController.getProductById(1L);
         assertEquals(product, output);
-
-        try {
-            throw new RuntimeErrorException(new Error("Error"));
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        } finally {
-            System.out.println("Finally");
-        }
     }
 
 }
